@@ -149,6 +149,15 @@
 			}
 		</style>
 		<style>
+			.panel-heading{
+				background-color: #4b72b4;
+    			color: #fff;
+    			font-size: 18px;
+			}
+
+			.panel-title{
+    			font-size: 18px;
+			}
 			.adminRecommendation .col-sm-4 {
 			    overflow: hidden;
 			    position: relative;
@@ -240,6 +249,133 @@
 			    font-style: italic;
 			    color: #247D8F;
 			}
+			.description {
+    			font-size: 20px;
+    		}
+    		hr {
+			    margin-top: 20px;
+			    margin-bottom: 20px;
+			    border: 0;
+			    border-top: 1px solid #eee;
+			}
+			.box-body {
+			    padding: 15px;
+			    background-color: white;
+			}
+			.mainWell {
+			    background-color: #fff;
+			    border: none;
+			    margin-bottom: 0;
+			    margin-left: -15px;
+			    margin-right: -15px;
+			}
+			.well {
+			    min-height: 20px;
+			    padding: 19px;
+			    margin-bottom: 20px;
+			    background-color: #f5f5f5;
+			    border: 1px solid #e3e3e3;
+			    border-radius: 4px;
+			    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+			}
+			.searchSubmit {
+			    width: 100%;
+			}
+			.requestMore, .requested, .searchResults, .searchSubmit {
+			    margin-top: 15px;
+			}
+			.btn-success {
+			    color: #fff;
+			    background-color: #5cb85c;
+			    border-color: #4cae4c;
+			}
+			.btn {
+			    display: inline-block;
+			    padding: 6px 12px;
+			    margin-bottom: 0;
+			    font-size: 14px;
+			    font-weight: 400;
+			    line-height: 1.42857143;
+			    text-align: center;
+			    white-space: nowrap;
+			    vertical-align: middle;
+			    -ms-touch-action: manipulation;
+			    touch-action: manipulation;
+			    cursor: pointer;
+			    -webkit-user-select: none;
+			    -moz-user-select: none;
+			    -ms-user-select: none;
+			    user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 4px;
+			}
+			button, html input[type=button], input[type=reset], input[type=submit] {
+			    -webkit-appearance: button;
+			    cursor: pointer;
+			}
+			button, select {
+			    text-transform: none;
+			}
+			button {
+			    overflow: visible;
+			}
+			button, input, optgroup, select, textarea {
+			    margin: 0;
+			    font: inherit;
+			    color: inherit;
+			}
+			.btn-group-lg>.btn, .btn-lg {
+			    padding: 10px 16px;
+			    font-size: 18px;
+			    line-height: 1.3333333;
+			    border-radius: 6px;
+			}
+			.requested .col-xs-4 {
+			    width: 100px!important;
+			}
+			.col-xs-4 {
+			    width: 33.33333333%;
+			}
+			.requested .col-xs-4 img {
+			    width: 100%;
+			    border: 1px solid gray;
+			}
+			img {
+			    vertical-align: middle;
+			}
+			img {
+			    border: 0;
+			}
+			.requested .col-xs-8 {
+			    width: calc(100% - 100px)!important;
+			    padding-left: 0;
+			}
+			.col-xs-8 {
+			    width: 66.66666667%;
+			}
+			.requested .col-xs-8 .resultLink {
+			    font-size: 18px;
+			    color: #337AB7;
+			    display: block;
+			    margin-bottom: 3px;
+			}
+			.requested .col-xs-8 p {
+			    font-size: 14px;
+			    margin-bottom: 3px;
+			}
+			p {
+			    margin: 0 0 10px;
+			}
+			.requestMore {
+			    color: gray;
+			    background: #E9EAED;
+			    border: none;
+			    -webkit-box-shadow: none!important;
+			    -moz-box-shadow: none!important;
+			    box-shadow: none!important;
+			}
 		</style>
 	</head>
 	<body>
@@ -272,15 +408,15 @@
 		</div>
 		<div class="navbar-addon hidden-xs" style="min-height:50px;">
 			<div class="leftLinks">
-				<a href="/" title="MangaSee - Read Free Manga Online"><i class="fa fa-home"></i> Home</a>
-				<a href="/directory/" title="Manga Directory"><i class="fa fa-folder-open"></i> Directory</a>
-				<a href="/search/" title="Search For A Specific Manga"><i class="fa fa-search-plus"></i> Explore</a>
+				<a href="<?=base_url()?>" title="MangaSee - Read Free Manga Online"><i class="fa fa-home"></i> Home</a>
+				<a href="<?=site_url('Manga/directory')?>" title="Manga Directory"><i class="fa fa-folder-open"></i> Directory</a>
+				<a href="<?=site_url('Manga/search')?>" title="Search For A Specific Manga"><i class="fa fa-search-plus"></i> Explore</a>
 			</div>
 			<div class="rightLinks">
-				<a href="https://www.facebook.com/MangaAndAnimeOnline/" title="Login">
+				<a data-toggle="modal" href="#modal_Login" title="Login">
 					<i class="fa fa-sign-in"></i> Login
 				</a>
-				<a href="https://twitter.com/animemangastuff/" title="Sign Up">
+				<a data-toggle="modal" href="#modal_SignUp" title="Sign Up">
 					<i class="fa fa-user-plus"></i> Sign Up
 				</a>
 			</div>

@@ -38,10 +38,8 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Manga</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add New Manga</h4>
           </div>
           <div class="modal-body">
           <input type="hidden" name="idM" id="idM" value="">
@@ -50,6 +48,9 @@
                 <div class="col-md-10">
                   <input type="text" name="title" id="title" class="form-control" placeholder="Title" required>
                 </div>
+            </div>
+            <div id="responseDiv" class="alert text-center col-md-offset-2 col-md-10" style="display:none;padding: 5px;">
+              <span id="message"></span>
             </div>
             <div class="form-group row">
               <label class="col-md-2 col-form-label">Alternate Name</label>
@@ -117,10 +118,8 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Manga</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Edit Manga</h4>
           </div>
           <div class="modal-body">
           <input type="hidden" name="id_manga_edit" id="id_manga_edit">
@@ -154,7 +153,7 @@
               <div class="col-md-10">
                 <?php foreach ($genre as $gen) { ?>
                 <div class="col-md-4">
-                  <input type="checkbox" name="genre_check[]" value="<?php echo $gen->id_genre ?>">
+                  <input type="checkbox" name="genre_check[]" value="<?php echo $gen->id_genre ?>" id="checkbox_edit">
                   <label>
                     <?php echo $gen->genre ?>
                   </label>
@@ -197,10 +196,8 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Recomend Manga</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Recomend Manga</h4>
             </div>
             <div class="modal-body">
               <strong>Are you sure to recomend this record?</strong>
@@ -222,10 +219,8 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Delete Manga</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Delete Manga</h4>
             </div>
             <div class="modal-body">
               <strong>Are you sure to delete this record?</strong>

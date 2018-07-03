@@ -29,7 +29,7 @@ function get_time_ago( $time )
 
 <div class="container">
 	<div class="col-sm-12 col-md-8">
-	<div class="panel panel-info adminRecommendation">
+	<div class="panel adminRecommendation">
 		<div class="panel-heading">
 			<b><h3 class="panel-title"><i class="fa fa-thumbs-o-up"></i> Admin Recommendation</h3></b>
 		</div>
@@ -65,7 +65,7 @@ function get_time_ago( $time )
 	</div>	
 	</div>
 	<div class="col-sm-12 col-md-4">
-		<div class="panel panel-info">
+		<div class="panel">
 			<div class="panel-heading">
 				<h3 class="panel-title">Panel title</h3>
 			</div>
@@ -75,7 +75,7 @@ function get_time_ago( $time )
 		</div>
 	</div>
 	<div class="col-sm-12 col-md-8">
-		<div class="panel panel-info leftColumn">
+		<div class="panel leftColumn">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-book"></i> Latest Chapters</h3>
 			</div>

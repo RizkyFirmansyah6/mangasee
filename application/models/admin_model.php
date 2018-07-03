@@ -9,10 +9,16 @@ class Admin_model extends CI_Model {
        	return $query->result();
 	}
 
+	public function getAllUser()
+	{
+		$query=$this->db->get('user');
+       	return $query->result();
+	}
+
 	public function getGenre($id_manga)
 	{
 		$this->db->where('id_manga', $id_manga);
-		$query=$this->db->get('genre');
+		$query=$this->db->get('genre_manga');
        	return $query->result();
 	}
 
@@ -30,6 +36,33 @@ class Admin_model extends CI_Model {
 	{
 		$query=$this->db->get('manga');
        	return $query->result();
+	}
+
+	public function checkChapter($id_manga,$chapter)
+	{
+		$this->db->select('*');
+		$this->db->from('isi_manga');
+		$this->db->where('id_manga', $id_manga);
+		$this->db->where('chapter', $chapter);
+		$query = $this->db->get();
+		if ($query->num_rows()>=1) {
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	public function checkTitle($title)
+	{
+		$this->db->select('*');
+		$this->db->from('manga');
+		$this->db->where('title', $title);
+		$query = $this->db->get();
+		if ($query->num_rows()>=1) {
+			return $query->result();
+		}else{
+			return false;
+		}
 	}
 
 	public function getAllPage($id_manga,$chapter)
@@ -141,6 +174,47 @@ class Admin_model extends CI_Model {
 		);
 		$this->db->where('id_manga', $id_manga);
 		$result = $this->db->update('manga', $data);
+		return $result;
+	}
+
+	public function promote($id_user)
+	{
+		$data = array(
+				'is_admin' => 1,
+				'is_suspended' => 0
+		);
+		$this->db->where('id_user', $id_user);
+		$result = $this->db->update('user', $data);
+		return $result;
+	}
+
+	public function dismiss($id_user)
+	{
+		$data = array(
+				'is_admin' => 0
+		);
+		$this->db->where('id_user', $id_user);
+		$result = $this->db->update('user', $data);
+		return $result;
+	}
+
+	public function suspend($id_user)
+	{
+		$data = array(
+				'is_suspended' => 1
+		);
+		$this->db->where('id_user', $id_user);
+		$result = $this->db->update('user', $data);
+		return $result;
+	}
+
+	public function revoke($id_user)
+	{
+		$data = array(
+				'is_suspended' => 0
+		);
+		$this->db->where('id_user', $id_user);
+		$result = $this->db->update('user', $data);
 		return $result;
 	}
 

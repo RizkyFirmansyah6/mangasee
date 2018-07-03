@@ -18,11 +18,11 @@
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
 	<script type="text/javascript">
-	// $.noConflict();
 	$(document).ready(function(){
         show_manga(); //call function show all product
 
         // $('#mydata').dataTable();
+        var flag = false;
           
         //function show all manga
         function show_manga(){
@@ -89,52 +89,78 @@
             });
         }
 
+        $('#title').on('change',function(){
+            var title = $('#title').val();
+            $.ajax({
+                type : "POST",
+                url  : "<?php echo site_url('Admin/checkTitle') ?>",
+                dataType : "JSON",
+                data : {title:title},
+                success: function(response){
+                    if(response.error){
+                        $('#message').html(response.message);
+                        $('#responseDiv').removeClass('alert-success').addClass('alert-danger').show();
+                        // flag = true;
+                    }else{
+                        $('#responseDiv').hide();
+                        // flag = false;
+                    }
+                }
+            });
+            return false;
+        });
+
         //Save manga
         $('#addManga').submit(function(e){
 	        e.preventDefault();
 			var title = $('#title').val();
-            $.ajax({
-	           url:'<?php echo base_url();?>index.php/Admin/upload_manga', //URL submit
-	           type:"post", //method Submit
-	           data:new FormData(this), //penggunaan FormData
-	           processData:false,
-	           contentType:false,
-	           cache:false,
-	           async:false,
-	           success: function(data){
+            if(flag){
+            
+            }
+            else{
+                $.ajax({
+                   url:'<?php echo base_url();?>index.php/Admin/upload_manga', //URL submit
+                   type:"post", //method Submit
+                   data:new FormData(this), //penggunaan FormData
+                   processData:false,
+                   contentType:false,
+                   cache:false,
+                   async:false,
+                   success: function(data){
 
-	            }
-	        });
-            $.ajax({
-			    	url: '<?php echo base_url();?>index.php/Admin/getMangaId',
-			    	method: 'POST',
-			    	dataType: 'json',
-			    	async:false,
-			    	data: {
-			        	title: title
-			    }, success: function (data) {
-			    	$('#idM').attr('value',data[0].id_manga);
-			    }
-			});
-			$.ajax({
-	           url:'<?php echo base_url();?>index.php/Admin/check', //URL submit
-	           type:"post", //method Submit
-	           data:new FormData(this), //penggunaan FormData
-	           processData:false,
-	           contentType:false,
-	           cache:false,
-	           async:false,
-	           success: function(data){
-     				$('#addManga').trigger("reset");
-     			// 	$("#addManga").find('input:text, input:password, input:file, select, textarea').val('');
-    				// $("#addManga").find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
-                    // jQuery.noConflict();
-                    $('#Modal_Add').modal('hide');
-                    $(".table").DataTable().destroy();
-                    $('tbody').empty();	
-                    show_manga();
-	            }
-	        });
+                   }
+                });
+                $.ajax({
+                    url: '<?php echo base_url();?>index.php/Admin/getMangaId',
+                    method: 'POST',
+                    dataType: 'json',
+                    async:false,
+                    data: {
+                        title: title
+                    }, success: function (data) {
+                        $('#idM').attr('value',data[0].id_manga);
+                    }
+                });
+                $.ajax({
+                    url:'<?php echo base_url();?>index.php/Admin/check', //URL submit
+                    type:"post", //method Submit
+                    data:new FormData(this), //penggunaan FormData
+                    processData:false,
+                    contentType:false,
+                    cache:false,
+                    async:false,
+                    success: function(data){
+                        $('#addManga').trigger("reset");
+                    //  $("#addManga").find('input:text, input:password, input:file, select, textarea').val('');
+                    //  $("#addManga").find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    //  jQuery.noConflict();
+                        $('#Modal_Add').modal('hide');
+                        $(".table").DataTable().destroy();
+                        $('tbody').empty(); 
+                        show_manga();
+                    }
+                });
+            }
             return false;
         });
 
@@ -192,6 +218,19 @@
           $('[name="status_edit"]').val(status);
           $('#description_edit').text(description);
           $('[name="lcover"]').val(lcover);
+          $(":checkbox[id=checkbox_edit]").prop("checked",false);
+          $.ajax({
+                type : "POST",
+                url  : "<?php echo site_url(); ?>/Admin/getGenre",
+                dataType : "JSON",
+                data : {id_manga:id_manga},
+                success: function(data){
+                    var i;
+                    for(i=0; i<data.length; i++){
+                        $(":checkbox[id=checkbox_edit][value="+data[i].id_genre+"]").prop("checked",true);
+                    }
+                }
+            });
         });
         
         //update record to database

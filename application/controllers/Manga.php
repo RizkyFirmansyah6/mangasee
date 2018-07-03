@@ -25,6 +25,18 @@ class Manga extends CI_Controller {
 		$this->load->view('main/home',$data);
 	}
 
+	public function directory()
+	{
+		$data['manga']=$this->manga_model->all_manga();
+
+		$this->load->view('main/directory',$data);
+	}
+
+	public function search()
+	{
+		$this->load->view('main/search');
+	}
+
 	public function manga($id_manga)
 	{
 		$data['detail']=$this->manga_model->manga_detail($id_manga);

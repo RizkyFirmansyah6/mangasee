@@ -84,23 +84,36 @@
                 $('#errorLabel').after('<span class="error"> Numbers only</span>');
             }
             else{
-                $('#idManga').attr('value',$('#idM').val());
-                $('#cpt').attr('value',$('#chapter').val());
-                $('#tite').attr('value',$('#titl').val());
-                $('#loop').attr('value',page);
-                var isi = '';
-                $('#addManga').trigger("reset");
-                $('#Modal_Add').modal('hide');
-                for (var i = 1; i <= page; i++) {
-                    isi += '<div class="form-group row">'+
-                            '<label class="col-md-2 col-form-label">Page '+i+'</label>'+
-                            '<div class="col-md-10">'+
-                            '<input type="file" name="file'+i+'" required>'+
-                            '</div>'+
-                            '</div>';
-                }
-                $('#dynamic_form').html(isi);
-                $('#Modal_Add_Page').modal('show');
+                $.ajax({
+                    type : "POST",
+                    url  : "<?php echo site_url('Admin/checkChapter') ?>",
+                    dataType : "JSON",
+                    data : {id_manga:id_manga,chapter:chp},
+                    success: function(response){
+                        if(response.error){
+                            $('#errorLabel').after('<span class="error"> '+response.message+'</span>');
+                        }
+                        else{
+                            $('#idManga').attr('value',$('#idM').val());
+                            $('#cpt').attr('value',$('#chapter').val());
+                            $('#tite').attr('value',$('#titl').val());
+                            $('#loop').attr('value',page);
+                            var isi = '';
+                            $('#addManga').trigger("reset");
+                            $('#Modal_Add').modal('hide');
+                            for (var i = 1; i <= page; i++) {
+                                isi += '<div class="form-group row">'+
+                                        '<label class="col-md-2 col-form-label">Page '+i+'</label>'+
+                                        '<div class="col-md-10">'+
+                                        '<input type="file" name="file'+i+'" required>'+
+                                        '</div>'+
+                                        '</div>';
+                            }
+                            $('#dynamic_form').html(isi);
+                            $('#Modal_Add_Page').modal('show');
+                        }
+                    }
+                });
             }
         });
 

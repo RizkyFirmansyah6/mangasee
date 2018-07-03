@@ -52,6 +52,7 @@
 			}
 			.modal {
 			    overflow-y: auto;
+			    margin-top: 50px;
 			}
 			.navbar{
 				background-color: #4B72B4;
@@ -106,13 +107,13 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse device-fixed-width">
 					<ul class="nav navbar-nav">
-				        <li><a href="<?=site_url('Admin')?>">Manga List</a></li>
-				        <li><a href="<?=site_url('Admin/user')?>/latihan/create">User List</a></li>
+				        <li><a href="<?=site_url('Admin')?>"><i class="fa fa-book"></i> Manga List</a></li>
+				        <li><a href="<?=site_url('Admin/user')?>"><i class="fa fa-user"></i> User List</a></li>
 			        </ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="/search/">
-								<i class="fa fa-search hidden-xs"></i> Logout
+							<a href="<?=site_url('Login/logout')?>">
+								<i class="fa fa-sign-out"></i> Logout
 							</a>
 						</li>
 					</ul>

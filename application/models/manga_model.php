@@ -10,6 +10,14 @@ class Manga_model extends CI_Model {
 		return $query->result();
 	}
 
+	public function all_manga()
+	{
+		$this->db->select('*');
+		$this->db->from('manga');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function genre_rec()
 	{
 		$this->db->select('g.genre');

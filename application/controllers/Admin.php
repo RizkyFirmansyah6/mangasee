@@ -9,11 +9,25 @@ class Admin extends CI_Controller {
 		$this->load->model('admin_model');
 		$this->load->helper('url','form');
 		$this->load->library('form_validation');
+		if ($this->session->userdata('logged_in')) {
+			$session_data = $this->session->userdata('logged_in');
+			$data['is_admin'] = $session_data['is_admin'];
+			if ($data['is_admin'] != 1) {
+				redirect('manga','refresh');
+			}
+		}else {
+			redirect('manga','refresh');
+		}
 	}
 
 	public function index()
 	{
 		$this->home();
+	}
+
+	public function user()
+	{
+		$this->load->view('admin/list_user');
 	}
 
 	public function home()
@@ -43,11 +57,72 @@ class Admin extends CI_Controller {
         echo json_encode($data);
 	}
 
+	public function getUser()
+	{
+		$data=$this->admin_model->getAllUser();
+        echo json_encode($data);
+	}
+
+	public function promote_user()
+	{
+		$id_user = $this->input->post('id_user');
+		$data = $this->admin_model->promote($id_user);
+		echo json_encode($data);
+	}
+
+	public function dismiss_user()
+	{
+		$id_user = $this->input->post('id_user');
+		$data = $this->admin_model->dismiss($id_user);
+		echo json_encode($data);
+	}
+
+	public function suspend_user()
+	{
+		$id_user = $this->input->post('id_user');
+		$data = $this->admin_model->suspend($id_user);
+		echo json_encode($data);
+	}
+
+	public function revoke_user()
+	{
+		$id_user = $this->input->post('id_user');
+		$data = $this->admin_model->revoke($id_user);
+		echo json_encode($data);
+	}
+
 	public function getChapter()
 	{
 		$id_manga = $this->input->post('id_manga');
 		$data=$this->admin_model->getAllChapter($id_manga);
         echo json_encode($data);
+	}
+
+	public function checkChapter()
+	{
+		$id_manga = $this->input->post('id_manga');
+		$chapter = $this->input->post('chapter');
+		$output = array('error' => false);
+
+		$result=$this->admin_model->checkChapter($id_manga,$chapter);
+		if ($result) {
+			$output['error'] = true;
+			$output['message'] = 'Chapter already exist';
+		}
+        echo json_encode($output);
+	}
+
+	public function checkTitle()
+	{
+		$title = $this->input->post('title');
+		$output = array('error' => false);
+
+		$result=$this->admin_model->checkTitle($title);
+		if ($result) {
+			$output['error'] = true;
+			$output['message'] = 'Title already exist';
+		}
+        echo json_encode($output);
 	}
 
 	public function getPage()
@@ -98,9 +173,19 @@ class Admin extends CI_Controller {
 		$id_manga = $this->input->post('id_manga');
 		$title = $this->input->post('title');
 		$dir = './assets/images/manga/'.$title;
-		$this->delTree($dir);
-		// $data = $this->admin_model->delete($id_manga);
+		$this->delete_files($dir);
+		$data = $this->admin_model->delete($id_manga);
 		echo json_encode($data);
+	}
+
+	function delete_files($dir) { 
+		foreach(glob($dir . '/*') as $file) { 
+			if(is_dir($file)){
+				$this->delete_files($file);	
+			}  else{
+				unlink($file); 	
+			} 
+		} rmdir($dir); 
 	}
 
 	function delTree($dir)
