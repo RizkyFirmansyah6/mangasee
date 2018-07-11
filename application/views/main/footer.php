@@ -169,6 +169,8 @@
 							$('#pass_login').val("");
 							if (response.level == "Administrator") {
 								setTimeout(' window.location.href = "<?php echo site_url('Admin'); ?>" ',3000);
+							}else{
+								setTimeout(' window.location.href = "<?php echo site_url('Manga'); ?>" ',3000);
 							}
 						}
 	                }
@@ -239,6 +241,39 @@
 	 
 	    });
 	     
+	</script>
+	<script type="text/javascript">
+		show_manga();
+
+		function show_manga(){
+            $.ajax({
+                type  : 'ajax',
+                url   : '<?php echo base_url();?>index.php/Manga/getAllManga',
+                dataType : 'json',
+                success : function(data){
+                    var html = '';
+                    var i;
+                    for(i=0; i<data.length; i++){
+                        html += '<div class="requested">'+
+                                '<div class="row">'+
+                                '<div class="col-xs-4">'+
+                                '<img src="<?=base_url()?>./assets/images/cover/'+data[i].cover+'">'+
+                                '</div>'+
+                                '<div class="col-xs-8">'+
+                                '<a class="resultLink" href="<?=site_url('Manga/readOnline')?>">'+data[i].title+'</a>'+
+                                '<p>Author: <a href="/search/?author=KITADA Ryouma">'+data[i].author+'</a></p>'+
+                                '<p>Status: '+data[i].status+'</p>'+
+                                '<p>Latest: <a href="/read-online/Myuun-I-chapter-10-index-1-page-1.html">Chapter 10</a></p>'+
+                                '<p>Genre: <a href="/search/?genre=Action">Action</a>, <a href="/search/?genre=Mystery">Mystery</a>, <a href="/search/?genre=Sci-fi">Sci-fi</a>, <a href="/search/?genre=Shounen">Shounen</a>, <a href="/search/?genre=Supernatural">Supernatural</a></p>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>';
+                    }
+                    $('#result').html(html);
+                }
+ 
+            });
+        }
 	</script>
 	</body>
 </html>

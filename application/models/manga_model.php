@@ -14,6 +14,7 @@ class Manga_model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->from('manga');
+		$this->db->order_by('title');
 		$query = $this->db->get();
 		return $query->result();
 	}

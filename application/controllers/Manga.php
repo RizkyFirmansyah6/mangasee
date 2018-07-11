@@ -62,6 +62,12 @@ class Manga extends CI_Controller {
 		$this->load->view('readerAll/read_onIine',$data);
 	}
 
+	public function getAllManga()
+	{
+		$data = $this->manga_model->all_manga();
+		echo json_encode($data);
+	}
+
 }
 
 /* End of file Manga.php */

@@ -376,9 +376,72 @@
 			    -moz-box-shadow: none!important;
 			    box-shadow: none!important;
 			}
+			.mainContainer {
+			    margin-bottom: 5px;
+			}
+
+			.mainContainer {
+			    max-width: 970px;
+			    margin-top: 0;
+			}
+			@media (min-width: 1200px)
+			.container {
+			    width: 1170px;
+			}
+			@media (min-width: 992px)
+			.container {
+			    width: 970px;
+			}
+			@media (min-width: 768px)
+			.container {
+			    width: 750px;
+			}
+			.container {
+			    padding-right: 15px;
+			    padding-left: 15px;
+			    margin-right: auto;
+			    margin-left: auto;
+			}
+			.mainWell .panel-title {
+			    font-size: 12px;
+			    font-weight: 700;
+			}
+			.mainWell .panel-heading {
+			    cursor: pointer;
+			    height: 30px;
+			    padding: 6px 10px 0;
+			}
+			.mainWell .list-group-item {
+			    height: 30px;
+			    padding: 5px 10px;
+			    font-size: 12px;
+			    cursor: pointer;
+			}
+			a.list-group-item, button.list-group-item {
+			    color: #555;
+			}
+			.list-group-item {
+			    position: relative;
+			    display: block;
+			    padding: 10px 15px;
+			    margin-bottom: -1px;
+			    background-color: #fff;
+			    border: 1px solid #ddd;
+			}
+			.mainContainer .fa-check {
+			    margin-top: 2px;
+			    color: green;
+			}
 		</style>
 	</head>
 	<body>
+		<?php 
+			if ($this->session->userdata('logged_in')) {
+				$session_data = $this->session->userdata('logged_in');
+				$data['is_admin'] = $session_data['is_admin'];
+				$data['username'] = $session_data['username'];
+			}
+		?>
 		<!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="background-color: #252526;">
 			<div class="container">
 			<div class="navbar-header">
@@ -413,12 +476,33 @@
 				<a href="<?=site_url('Manga/search')?>" title="Search For A Specific Manga"><i class="fa fa-search-plus"></i> Explore</a>
 			</div>
 			<div class="rightLinks">
+				<?php 
+				if ($this->session->userdata('logged_in')) {
+				?>
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $data['username'] ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<?php 
+								if ($data['is_admin'] == 1) {
+								?>
+								<li><a href="<?=site_url('Admin')?>"><i class="fa fa-user-secret"></i> Administrator</a></li>
+								<?php } ?>
+								<li><a href="<?=site_url('Login/logout')?>"><i class="fa fa-sign-out"></i> Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<?php }else {
+				?>
 				<a data-toggle="modal" href="#modal_Login" title="Login">
 					<i class="fa fa-sign-in"></i> Login
 				</a>
 				<a data-toggle="modal" href="#modal_SignUp" title="Sign Up">
 					<i class="fa fa-user-plus"></i> Sign Up
 				</a>
+				<?php } ?>
 			</div>
 		</div>
 		

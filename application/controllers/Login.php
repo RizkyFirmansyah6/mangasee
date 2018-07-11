@@ -32,12 +32,17 @@ class Login extends CI_Controller {
 					'email' => $row->email,
 					'is_admin' => $row->is_admin
 				);
-				$this->session->set_userdata('logged_in',$sess_array );
-				$output['message'] = 'Logging in. Please wait...';
-				if ($row->is_admin == 1) {
-					$output['level'] = 'Administrator';
+				if ($row->is_suspended == 1) {
+					$output['error'] = true;
+					$output['message'] = 'Login Failed. User is Suspended';
 				}else {
-					$output['level'] = 'User';
+					$this->session->set_userdata('logged_in',$sess_array );
+					$output['message'] = 'Logging in. Please wait...';
+					if ($row->is_admin == 1) {
+						$output['level'] = 'Administrator';
+					}else {
+						$output['level'] = 'User';
+					}
 				}
 			}
 		}else {

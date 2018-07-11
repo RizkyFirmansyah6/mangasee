@@ -129,6 +129,37 @@ function get_time_ago( $time )
 			<a href="<?=site_url()?>/Manga/readOnline/<?php echo $detail[0]->id_manga ?>/1" title="Read <?php echo $detail[0]->title ?> Chapter 1 For Free Online">Begin Chapter 1</a>
 		</div>
 		<div class="list chapter-list">
+			<?php if ($this->session->userdata('logged_in')) { ?>
+			<?php foreach ($chapter as $val)
+			{
+			?>
+			<div class="row">	
+				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11" style="padding-right: 0">
+					<a class="list-group-item" chapter="<?php echo $val->chapter; ?>" href="<?=site_url()?>/Manga/readOnline/<?php echo $detail[0]->id_manga ?>/<?php echo $val->chapter ?>" title="Read <?php echo $detail[0]->title ?> Chapter <?php echo $val->chapter; ?> For Free Online">
+						<span class="chapterLabel">Chapter <?php echo $val->chapter; ?></span>
+						<i class="hidden-xs"></i>
+						<?php $tanggal = get_time_ago(strtotime($val->date_posted)); 
+						if ($tanggal == false) {
+						?>
+						<time class="SeriesTime pull-right" datetime="<?php echo $val->date_posted; ?>" datestring="<?php echo date('Ymd',strtotime($val->date_posted)); ?>"><?php echo date($val->date_posted) ?></time>
+						<?php }else {
+						?>
+						<time class="SeriesTime pull-right" datetime="<?php echo $val->date_posted; ?>" datestring="<?php echo date('Ymd',strtotime($val->date_posted)); ?>" title="<?php echo date('m/d/Y',strtotime($val->date_posted)); ?>"><?php echo $tanggal; ?></time>
+						<?php
+						}
+						?>
+
+					</a>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" style="padding-left: 0">
+					<a class="list-group-item" href="<?=site_url('PrintPdf/pdfPrint')?>/<?php echo $val->id_manga."/".$val->chapter ?>" ?> 
+					<center><i class="fa fa-download"></i></center>
+					</a>	
+				</div>
+			</div>
+			<?php
+			} ?>
+			<?php }else { ?>
 			<?php foreach ($chapter as $val)
 			{
 			?>
@@ -138,16 +169,18 @@ function get_time_ago( $time )
 				<?php $tanggal = get_time_ago(strtotime($val->date_posted)); 
 				if ($tanggal == false) {
 				?>
-				<time class="SeriesTime pull-right" datetime="<?php echo $val->date_posted; ?>" datestring="<?php echo date('Ymd',strtotime($val->date_posted)); ?>"><?php date('m/d/Y',$val->date_posted); ?></time>
+				<time class="SeriesTime pull-right" datetime="<?php echo $val->date_posted; ?>" datestring="<?php echo date('Ymd',strtotime($val->date_posted)); ?>"><?php echo date($val->date_posted) ?></time>
 				<?php }else {
 				?>
 				<time class="SeriesTime pull-right" datetime="<?php echo $val->date_posted; ?>" datestring="<?php echo date('Ymd',strtotime($val->date_posted)); ?>" title="<?php echo date('m/d/Y',strtotime($val->date_posted)); ?>"><?php echo $tanggal; ?></time>
 				<?php
 				}
 				?>
+
 			</a>
 			<?php
 			} ?>
+			<?php } ?>
 		</div>
 	</div>
 </div>
